@@ -3,19 +3,17 @@ const { app, BrowserWindow } = require('electron')
 
 function createWindow () {
   // Create the browser window.
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      nodeIntegration: true
-    }
-  })
+  const parent = new BrowserWindow()
+// recommended 
+    const child = new BrowserWindow({ 
+        parent: parent,
+        modal: true, 
+        show: false
+    })
+    child.loadURL('https://github.com')
+    //show as soon as the file is rendered
+    child.once('ready-to-show', () => {   child.show() })
 
-  //load the index.html from a url
-  win.loadURL('http://localhost:3000');
-
-  // Open the DevTools.
-  win.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished
@@ -40,7 +38,3 @@ app.on('activate', () => {
     createWindow()
   }
 })
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
-view rawmain.js hosted with ❤ by GitHub
