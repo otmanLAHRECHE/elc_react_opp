@@ -1,19 +1,21 @@
-
 const { app, BrowserWindow } = require('electron')
 
 function createWindow () {
   // Create the browser window.
-  const parent = new BrowserWindow()
-// recommended 
-    const child = new BrowserWindow({ 
-        parent: parent,
-        modal: true, 
-        show: false
-    })
-    child.loadURL('https://github.com')
-    //show as soon as the file is rendered
-    child.once('ready-to-show', () => {   child.show() })
+  const win = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      nodeIntegration: true,
+      enableRemoteModule: true
+    }
+  })
 
+  //load the index.html from a url
+  win.loadURL('http://localhost:3000');
+
+  // Open the DevTools.
+  win.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished
